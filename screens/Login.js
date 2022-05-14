@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import CheckBox from 'expo-checkbox';
-import { Input, NativeBaseProvider, Button, Icon, Box, AspectRatio } from 'native-base';
+import { Input, Icon } from 'native-base';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import AuthenticationPageWrapper from './AuthenticationPageWrapper';
+import InputField from './InputField';
 
 export default function Login() {
   const [isSelected, setSelection] = useState(false);
@@ -23,88 +24,23 @@ export default function Login() {
 
   const navigation = useNavigation();
   return (
-    // <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-    //   <View style={styles.container}>
-    //     <Image style={styles.tinyLogo} source={require('../assets/goodmovelogo.jpg')} />
-    //     <View style={styles.middle}>
-    //       <Text style={styles.LoginText}>Customer Login</Text>
-    //     </View>
-    //     <View style={styles.middle}>
-    //       <Text style={styles.solganText}>Let's G-O</Text>
-    //     </View>
-    <AuthenticationPageWrapper pageTitle={'Customer Login'}>
+    <AuthenticationPageWrapper pageTitle={'Customer Login'} buttonTitle={'Log in'}>
       <View>
         {/* mobile number, password */}
         <View style={styles.buttonStyle}>
-          <View style={styles.mobileInput}>
-            <Input
-              InputLeftElement={
-                <Icon
-                  as={<FontAwesome5 name="mobile-alt" size={24} color="black" />}
-                  size="sm"
-                  m={2}
-                  _light={{
-                    color: 'black',
-                  }}
-                  _dark={{
-                    color: 'gray.300',
-                  }}
-                />
-              }
-              variant="outline"
-              keyboardType="numeric"
-              placeholder="Enter mobile"
-              _light={{
-                placeholderTextColor: 'blueGray.400',
-              }}
-              _dark={{
-                placeholderTextColor: 'blueGray.50',
-              }}
-            />
-          </View>
+          <InputField iconName={'mobile-alt'} keyboardType={'numeric'} placeholderType={'Enter mobile'} />
         </View>
 
         {/* password Input field */}
         <View style={styles.buttonStylesX}>
-          <View style={styles.passwordInput}>
-            <Input
-              InputLeftElement={
-                <Icon
-                  as={<FontAwesome5 name="key" />}
-                  size="sm"
-                  m={2}
-                  _light={{
-                    color: 'black',
-                  }}
-                  _dark={{
-                    color: 'gray.300',
-                  }}
-                />
-              }
-              secureTextEntry={hidePassword}
-              InputRightElement={
-                <Icon
-                  as={<FontAwesome5 name={rightIcon} />}
-                  onPress={() => _changeIcon()}
-                  mr={3}
-                  _light={{
-                    color: 'black',
-                  }}
-                  _dark={{
-                    color: 'gray.300',
-                  }}
-                />
-              }
-              variant="outline"
-              placeholder="Enter Password"
-              _light={{
-                placeholderTextColor: 'blueGray.400',
-              }}
-              _dark={{
-                placeholderTextColor: 'blueGray.50',
-              }}
-            />
-          </View>
+          <InputField
+            iconName={'key'}
+            keyboardType={'default'}
+            placeholderType={'Enter Password'}
+            rightIcon={rightIcon}
+            changeIcon={_changeIcon}
+            hidePassword={hidePassword}
+          />
         </View>
         {/* Button */}
         <View style={styles.rememberMeStyle}>
@@ -118,13 +54,8 @@ export default function Login() {
         </View>
 
         <View style={styles.forgotPasswordTextWraper}>
-          <TouchableOpacity onPress={() => navigation.navigate('#')}>
+          <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
             <Text style={styles.forgotPasswordTextStyle}>Forgot Password ?</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.buttonStyles}>
-          <TouchableOpacity>
-            <Text style={styles.buttonDesign}>Log in</Text>
           </TouchableOpacity>
         </View>
 
@@ -140,57 +71,16 @@ export default function Login() {
 
         <View style={styles.register}>
           <Text style={styles.textStyle}>Don't have an account ?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Signup', { rightIcon, _changeIcon })}>
             <Text style={styles.signUpText}>Sign Up</Text>
           </TouchableOpacity>
         </View>
-        {/* BOX */}
-
-        {/* <View style={styles.boxStyles}>
-        <Box
-          onPress={() => navigation.navigate('#')}
-          style={{ height: 80, width: 80, marginLeft: 20 }}
-          shadow={3}
-          _light={{
-            backgroundColor: 'gray.50',
-          }}
-          _dark={{
-            backgroundColor: 'gray.50',
-          }}
-        >
-          <AspectRatio ratio={1 / 1}>
-            <Image
-              roundedTop="lg"
-              source={{
-                uri:
-              }}
-              alt="image"
-            />
-          </AspectRatio>
-        </Box>
-      </View> */}
-        {/* </View> */}
-        {/* // </TouchableWithoutFeedback> */}
       </View>
     </AuthenticationPageWrapper>
   );
 }
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: '#fff',
-  //   justifyContent: 'center',
-  // },
-  // LoginText: {
-  //   marginTop: 20,
-  //   fontSize: 22,
-  //   fontWeight: 'bold',
-  // },
-  // middle: {
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
   register: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -217,23 +107,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40,
   },
-  buttonDesign: {
-    padding: 10,
-    paddingHorizontal: 140,
-    marginTop: 30,
-    marginHorizontal: 43,
-    //backgroundColor: '#7d0404',
-    //backgroundColor: '#05022e',
-    //backgroundColor: '#050140',
-    //backgroundColor: '#170247',
-    //backgroundColor: '#045704',
-    backgroundColor: '#046b04',
-    borderRadius: 5,
-    fontSize: 13,
-    color: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+
   lineStyles: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -260,12 +134,4 @@ const styles = StyleSheet.create({
     marginTop: -22,
     marginLeft: 250,
   },
-  // tinyLogo: {
-  //   width: 120,
-  //   height: 80,
-  //   marginHorizontal: 144,
-  // },
-  // solganText: {
-  //   marginTop: 5,
-  // },
 });
