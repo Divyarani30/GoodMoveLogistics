@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   signUpText: {
+    marginTop: 5,
     fontWeight: 'bold',
   },
   passwordInput: {
@@ -116,6 +117,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   textStyle: {
+    marginTop: 5,
     marginRight: 10,
   },
   checkBoxStyle: {
@@ -133,5 +135,8 @@ const styles = StyleSheet.create({
   forgotPasswordTextWraper: {
     marginTop: -22,
     marginLeft: 250,
+  },
+  forgotPasswordTextStyle: {
+    fontWeight: 'bold',
   },
 });

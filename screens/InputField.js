@@ -12,7 +12,7 @@ export default function InputField(props) {
           <Icon
             as={<FontAwesome5 name={iconName} size={24} color="black" />}
             size="sm"
-            m={2}
+            m={4}
             _light={{
               color: 'black',
             }}
@@ -53,5 +53,6 @@ const styles = StyleSheet.create({
   inputStyle: {
     marginTop: 10,
     marginRight: 5,
+    padding: 2,
   },
 });

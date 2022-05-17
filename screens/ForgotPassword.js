@@ -7,7 +7,7 @@ import InputField from './InputField';
 
 export default function ForgotPassword() {
   return (
-    <AuthenticationPageWrapper pageTitle={'Forgot Password'} buttonTitle={'Send'}>
+    <AuthenticationPageWrapper pageTitle={'Forgot Password'} buttonTitle={'Send'} pageName={'CreateNewPassword'}>
       <View>
         <Text style={styles.textDesign}>Enter Your Mobile Number Used During Registration</Text>
       </View>

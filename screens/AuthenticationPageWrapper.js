@@ -9,8 +9,11 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 export default function AuthenticationPageWrapper(props) {
-  const { pageTitle, buttonTitle } = props;
+  const { pageTitle, buttonTitle, pageName } = props;
+  const navigation = useNavigation();
   return (
     <ScrollView keyboardDismissMode="on-drag" contentContainerStyle={{ flexGrow: 1 }}>
       <View style={styles.container}>
@@ -23,8 +26,8 @@ export default function AuthenticationPageWrapper(props) {
         </View>
         {props.children}
         <View style={styles.buttonStyles}>
-          <TouchableOpacity>
-            <Text style={styles.buttonDesign}>{buttonTitle} </Text>
+          <TouchableOpacity onPress={() => navigation.navigate(pageName)}>
+            <Text style={styles.buttonDesign}>{buttonTitle}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -56,9 +59,9 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   buttonDesign: {
-    padding: 10,
-    paddingHorizontal: 135,
-    marginTop: 30,
+    paddingVertical: 9,
+    paddingHorizontal: 134,
+    marginTop: 25,
     marginHorizontal: 43,
     //backgroundColor: '#7d0404',
     //backgroundColor: '#05022e',
@@ -71,5 +74,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  buttonStyles: {
+    marginRight: 3,
   },
 });
