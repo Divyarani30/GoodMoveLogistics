@@ -2,9 +2,10 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { Input, Icon } from 'native-base';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { changeIcon } from '../Utils/utils';
 
 export default function InputField(props) {
-  const { iconName, keyboardType, placeholderType, hidePassword, rightIcon, changeIcon } = props;
+  const { iconName, keyboardType, placeholderType, hidePassword, rightIcon, toggleRightIcon, setHidePassword } = props;
   return (
     <View style={styles.inputStyle}>
       <Input
@@ -34,7 +35,7 @@ export default function InputField(props) {
         InputRightElement={
           <Icon
             as={<FontAwesome5 name={rightIcon} />}
-            onPress={() => changeIcon()}
+            onPress={() => changeIcon(toggleRightIcon, hidePassword, setHidePassword)}
             mr={3}
             _light={{
               color: 'black',

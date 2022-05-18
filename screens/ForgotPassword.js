@@ -4,18 +4,22 @@ import AuthenticationPageWrapper from './AuthenticationPageWrapper';
 import { Input, Icon } from 'native-base';
 import { FontAwesome5 } from '@expo/vector-icons';
 import InputField from './InputField';
+import { stringLiterals } from '../Utils/stringLiterals';
+
+const { FORGOT_PASSWORD_SCREEN } = stringLiterals;
+const { ENTER_YOUR_MOBILE_NUMBER_USED_DURING_REGISTRATION, ENTER_MOBILE } = FORGOT_PASSWORD_SCREEN;
 
 export default function ForgotPassword() {
   return (
     <AuthenticationPageWrapper pageTitle={'Forgot Password'} buttonTitle={'Send'} pageName={'CreateNewPassword'}>
       <View>
-        <Text style={styles.textDesign}>Enter Your Mobile Number Used During Registration</Text>
+        <Text style={styles.textDesign}>{ENTER_YOUR_MOBILE_NUMBER_USED_DURING_REGISTRATION}</Text>
       </View>
       <View style={styles.textInputDesign}>
         <InputField
           iconName={'mobile-alt'}
           keyboardType={'numeric'}
-          placeholderType={'Enter mobile'}
+          placeholderType={ENTER_MOBILE}
           hidePassword={false}
         />
       </View>
@@ -27,6 +31,7 @@ const styles = StyleSheet.create({
   textDesign: {
     marginTop: 30,
     marginHorizontal: 25,
+    color: '#696969',
   },
   textInputDesign: {
     marginTop: 25,

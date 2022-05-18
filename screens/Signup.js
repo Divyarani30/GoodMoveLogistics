@@ -8,7 +8,9 @@ import { useNavigation } from '@react-navigation/native';
 import InputField from './InputField';
 
 export default function Signup({ route }) {
-  const { rightIcon, _changeIcon } = route.params;
+  // const { rightIcon, toggleRightIcon, setHidePassword, hidePassword } = route.params;
+  const [rightIcon, toggleRightIcon] = useState('eye-slash');
+  const [hidePassword, setHidePassword] = useState(true);
 
   const navigation = useNavigation();
   const [companyTypes, setCompanyType] = useState([
@@ -35,7 +37,11 @@ export default function Signup({ route }) {
 
   const [selectedCompanyType, setSelectedCompanyType] = useState();
   return (
-    <AuthenticationPageWrapper pageTitle={'Customer Registration'} buttonTitle={'Register'}>
+    <AuthenticationPageWrapper
+      pageTitle={'Customer Registration'}
+      pageName={'OTPVerification'}
+      buttonTitle={'Register'}
+    >
       <View style={styles.nameStyle}>
         <InputField iconName={'user-tie'} keyboardType={'default'} placeholderType={'Enter Name'} />
         <InputField iconName={'building'} keyboardType={'default'} placeholderType={'Enter Company Name'} />
@@ -71,21 +77,26 @@ export default function Signup({ route }) {
         </View>
 
         <InputField iconName={'mobile-alt'} keyboardType={'numeric'} placeholderType={'Enter Mobile Name'} />
+        <InputField iconName={'envelope'} keyboardType={'default'} placeholderType={'Enter email'} />
+        <InputField iconName={'file-invoice'} keyboardType={'default'} placeholderType={'Enter GST number'} />
+
         <InputField
           iconName={'key'}
           keyboardType={'default'}
           placeholderType={'Enter Password'}
-          hidePassword={false}
+          hidePassword={hidePassword}
           rightIcon={rightIcon}
-          // changeIcon={changeIcon()}
+          toggleRightIcon={toggleRightIcon}
+          setHidePassword={setHidePassword}
         />
         <InputField
           iconName={'key'}
           keyboardType={'default'}
           placeholderType={'Confirm Password'}
-          hidePassword={false}
+          hidePassword={hidePassword}
           rightIcon={rightIcon}
-          // changeIcon={_changeIcon}
+          toggleRightIcon={toggleRightIcon}
+          setHidePassword={setHidePassword}
         />
         <View style={styles.loginBack}>
           <Text style={styles.textStyle}>Already have an account ?</Text>
@@ -111,6 +122,7 @@ const styles = StyleSheet.create({
   textStyle: {
     marginTop: 14,
     marginRight: 10,
+    color: '#696969',
   },
   loginText: {
     marginTop: 14,

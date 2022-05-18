@@ -6,6 +6,21 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import AuthenticationPageWrapper from './AuthenticationPageWrapper';
 import InputField from './InputField';
+import { stringLiterals } from '../Utils/stringLiterals';
+
+const { LOGIN_SCREEN } = stringLiterals;
+
+const {
+  CUSTOMER_LOGIN,
+  LOGIN,
+  ENTER_MOBILE,
+  ENTER_PASSWORD,
+  REMEMBER_ME,
+  FORGOT_PASSWORD,
+  OR,
+  DONT_HAVE_AN_ACCOUNT,
+  SIGN_UP,
+} = LOGIN_SCREEN;
 
 export default function Login() {
   const [isSelected, setSelection] = useState(false);
@@ -15,20 +30,13 @@ export default function Login() {
   const [mobileNumber, setMobileNumber] = useState('');
   const [pageTitle, setPageTitle] = useState('Customer Login');
 
-  const _changeIcon = () => {
-    toggleRightIcon((prevIcon) => {
-      return prevIcon === 'eye-slash' ? 'eye' : 'eye-slash';
-    });
-    setHidePassword(!hidePassword);
-  };
-
   const navigation = useNavigation();
   return (
-    <AuthenticationPageWrapper pageTitle={'Customer Login'} buttonTitle={'Log in'}>
+    <AuthenticationPageWrapper pageTitle={CUSTOMER_LOGIN} buttonTitle={LOGIN}>
       <View>
         {/* mobile number, password */}
         <View style={styles.buttonStyle}>
-          <InputField iconName={'mobile-alt'} keyboardType={'numeric'} placeholderType={'Enter mobile'} />
+          <InputField iconName={'mobile-alt'} keyboardType={'numeric'} placeholderType={ENTER_MOBILE} />
         </View>
 
         {/* password Input field */}
@@ -36,10 +44,11 @@ export default function Login() {
           <InputField
             iconName={'key'}
             keyboardType={'default'}
-            placeholderType={'Enter Password'}
+            placeholderType={ENTER_PASSWORD}
             rightIcon={rightIcon}
-            changeIcon={_changeIcon}
+            toggleRightIcon={toggleRightIcon}
             hidePassword={hidePassword}
+            setHidePassword={setHidePassword}
           />
         </View>
         {/* Button */}
@@ -50,12 +59,12 @@ export default function Login() {
             value={isSelected}
             onValueChange={(newValue) => setSelection(newValue)}
           />
-          <Text style={styles.rememberMeTextStyle}>Remember Me</Text>
+          <Text style={styles.rememberMeTextStyle}>{REMEMBER_ME}</Text>
         </View>
 
         <View style={styles.forgotPasswordTextWraper}>
           <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-            <Text style={styles.forgotPasswordTextStyle}>Forgot Password ?</Text>
+            <Text style={styles.forgotPasswordTextStyle}>{FORGOT_PASSWORD}</Text>
           </TouchableOpacity>
         </View>
 
@@ -64,15 +73,17 @@ export default function Login() {
         <View style={styles.lineStyles}>
           <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
           <View>
-            <Text style={{ width: 50, textAlign: 'center' }}>Or</Text>
+            <Text style={{ width: 50, textAlign: 'center' }}>{OR}</Text>
           </View>
           <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
         </View>
 
         <View style={styles.register}>
-          <Text style={styles.textStyle}>Don't have an account ?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Signup', { rightIcon, _changeIcon })}>
-            <Text style={styles.signUpText}>Sign Up</Text>
+          <Text style={styles.textStyle}>{DONT_HAVE_AN_ACCOUNT}</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Signup', { rightIcon, toggleRightIcon, setHidePassword, hidePassword })}
+          >
+            <Text style={styles.signUpText}>{SIGN_UP}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -119,6 +130,7 @@ const styles = StyleSheet.create({
   textStyle: {
     marginTop: 5,
     marginRight: 10,
+    color: '#696969',
   },
   checkBoxStyle: {
     marginTop: 30,
@@ -131,6 +143,7 @@ const styles = StyleSheet.create({
   rememberMeTextStyle: {
     marginTop: 30,
     marginLeft: 10,
+    color: '#696969',
   },
   forgotPasswordTextWraper: {
     marginTop: -22,

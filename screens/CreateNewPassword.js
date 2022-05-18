@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AuthenticationPageWrapper from './AuthenticationPageWrapper';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import InputField from './InputField';
+import { stringLiterals } from '../Utils/stringLiterals';
+
+const { CREATE_NEW_PASSWORD_SCREEN } = stringLiterals;
+
+const { PLEASE_ENTER_OTP_SENT_TO_MOBILE_NUMBER, ENTER_NEW_PASSWORD, CONFIRM_PASSWORD } = CREATE_NEW_PASSWORD_SCREEN;
 
 export default function CreateNewPassword() {
+  const [rightIcon, toggleRightIcon] = useState('eye-slash');
+  const [hidePassword, setHidePassword] = useState(true);
   return (
-    <AuthenticationPageWrapper buttonTitle={'Update'} pageTitle={'Change New Password'}>
+    <AuthenticationPageWrapper buttonTitle={'Update'} pageName={'Login'} pageTitle={'Change New Password'}>
       <View>
-        <Text style={styles.textDesign}>Enter 4 digit code sent to your Mobile number (to show the phone number)</Text>
+        <Text style={styles.textDesign}>{PLEASE_ENTER_OTP_SENT_TO_MOBILE_NUMBER}</Text>
       </View>
       <View style={styles.otpInputStyle}>
         <OTPInputView
@@ -39,18 +46,20 @@ export default function CreateNewPassword() {
         <InputField
           iconName={'key'}
           keyboardType={'default'}
-          placeholderType={'Enter New Password'}
-          hidePassword={false}
-          //   rightIcon={rightIcon}
-          // changeIcon={changeIcon()}
+          placeholderType={ENTER_NEW_PASSWORD}
+          hidePassword={hidePassword}
+          rightIcon={rightIcon}
+          toggleRightIcon={toggleRightIcon}
+          setHidePassword={setHidePassword}
         />
         <InputField
           iconName={'key'}
           keyboardType={'default'}
-          placeholderType={'Confirm New Password'}
-          hidePassword={false}
-          //   rightIcon={rightIcon}
-          // changeIcon={_changeIcon}
+          placeholderType={CONFIRM_PASSWORD}
+          hidePassword={hidePassword}
+          rightIcon={rightIcon}
+          toggleRightIcon={toggleRightIcon}
+          setHidePassword={setHidePassword}
         />
       </View>
     </AuthenticationPageWrapper>
@@ -61,7 +70,8 @@ const styles = StyleSheet.create({
   textDesign: {
     marginTop: 30,
     marginBottom: -45,
-    marginHorizontal: 36,
+    marginHorizontal: 73,
+    color: '#696969',
   },
   textInputDesign: {
     marginTop: 25,
@@ -90,7 +100,6 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   underlineStyleHighLighted: {
-    // borderColor: '#03DAC6',
     borderColor: '#03DAC6',
     color: '#03DAC6',
   },

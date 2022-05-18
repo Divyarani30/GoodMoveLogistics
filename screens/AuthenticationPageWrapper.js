@@ -1,19 +1,49 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Keyboard,
-  TouchableWithoutFeedback,
-  ScrollView,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { stringLiterals } from '../Utils/stringLiterals';
+
+const { CREATE_NEW_PASSWORD_SCREEN, LETS_GO } = stringLiterals;
+
+const { PASSWORD_UPDATE, PASSWORD_CHANGED_SUCCESSFULLY, REGISTRATION_SUCCESSFUL } = CREATE_NEW_PASSWORD_SCREEN;
 
 export default function AuthenticationPageWrapper(props) {
   const { pageTitle, buttonTitle, pageName } = props;
   const navigation = useNavigation();
+
+  const updateHandler = () => {
+    Alert.alert(
+      PASSWORD_UPDATE,
+      PASSWORD_CHANGED_SUCCESSFULLY,
+      [
+        {
+          text: 'Ok',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+      ],
+      {
+        cancelable: true,
+      },
+    );
+  };
+  const verificationHandler = () => {
+    Alert.alert(
+      REGISTRATION_SUCCESSFUL,
+      YOUR_REGISTRATION_IS_SUCCESSFUL,
+      [
+        {
+          text: 'Ok',
+          onPress: () => console.log('Cancel Pressed'),
+
+          style: 'cancel',
+        },
+      ],
+      {
+        cancelable: true,
+      },
+    );
+  };
   return (
     <ScrollView keyboardDismissMode="on-drag" contentContainerStyle={{ flexGrow: 1 }}>
       <View style={styles.container}>
@@ -22,11 +52,25 @@ export default function AuthenticationPageWrapper(props) {
           <Text style={styles.LoginText}>{pageTitle}</Text>
         </View>
         <View style={styles.middle}>
-          <Text style={styles.solganText}>Let's G-O</Text>
+          <Text style={styles.solganText}>{LETS_GO}</Text>
         </View>
         {props.children}
         <View style={styles.buttonStyles}>
-          <TouchableOpacity onPress={() => navigation.navigate(pageName)}>
+          <TouchableOpacity
+            onPress={() => {
+              if (pageTitle === 'Change New Password') {
+                updateHandler();
+                navigation.navigate(pageName);
+                return;
+              } else if (pageTitle === 'OTP Verification') {
+                verificationHandler();
+                navigation.navigate(pageName);
+                return;
+              } else {
+                navigation.navigate(pageName);
+              }
+            }}
+          >
             <Text style={styles.buttonDesign}>{buttonTitle}</Text>
           </TouchableOpacity>
         </View>
@@ -54,6 +98,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 22,
     fontWeight: 'bold',
+    color: '#696969',
   },
   solganText: {
     marginTop: 5,
