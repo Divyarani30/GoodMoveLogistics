@@ -28,15 +28,26 @@ export default function Login() {
   const [hidePassword, setHidePassword] = useState(true);
   const [password, setPassword] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
-  const [pageTitle, setPageTitle] = useState('Customer Login');
 
   const navigation = useNavigation();
   return (
-    <AuthenticationPageWrapper pageTitle={CUSTOMER_LOGIN} buttonTitle={LOGIN}>
+    <AuthenticationPageWrapper
+      pageTitle={CUSTOMER_LOGIN}
+      buttonTitle={LOGIN}
+      mobileNumber={mobileNumber}
+      password={password}
+    >
       <View>
         {/* mobile number, password */}
         <View style={styles.buttonStyle}>
-          <InputField iconName={'mobile-alt'} keyboardType={'numeric'} placeholderType={ENTER_MOBILE} />
+          <InputField
+            iconName={'mobile-alt'}
+            keyboardType={'numeric'}
+            placeholderType={ENTER_MOBILE}
+            setState={setMobileNumber}
+            name={'mobileNumber'}
+            value={mobileNumber}
+          />
         </View>
 
         {/* password Input field */}
@@ -49,6 +60,9 @@ export default function Login() {
             toggleRightIcon={toggleRightIcon}
             hidePassword={hidePassword}
             setHidePassword={setHidePassword}
+            setState={setPassword}
+            name={'password'}
+            value={password}
           />
         </View>
         {/* Button */}

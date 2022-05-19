@@ -2,7 +2,7 @@ export const stringLiterals = {
   LETS_GO: "Let's G-O",
   LOGIN_SCREEN: {
     CUSTOMER_LOGIN: 'Customer Login',
-    LOGIN: 'Log in',
+    LOGIN: 'Login',
     ENTER_MOBILE: 'Enter mobile',
     ENTER_PASSWORD: 'Enter Password',
     REMEMBER_ME: 'Remember Me',

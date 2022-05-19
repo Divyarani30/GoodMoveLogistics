@@ -11,8 +11,14 @@ const { ENTER_YOUR_MOBILE_NUMBER_USED_DURING_REGISTRATION, ENTER_MOBILE, FORGOT_
   FORGOT_PASSWORD_SCREEN;
 
 export default function ForgotPassword() {
+  const [mobile, setMobile] = useState('');
   return (
-    <AuthenticationPageWrapper pageTitle={FORGOT_PASSWORD} buttonTitle={SEND} pageName={CREATE_NEW_PASSWORD}>
+    <AuthenticationPageWrapper
+      pageTitle={FORGOT_PASSWORD}
+      buttonTitle={SEND}
+      pageName={CREATE_NEW_PASSWORD}
+      mobile={mobile}
+    >
       <View>
         <Text style={styles.textDesign}>{ENTER_YOUR_MOBILE_NUMBER_USED_DURING_REGISTRATION}</Text>
       </View>
@@ -22,6 +28,9 @@ export default function ForgotPassword() {
           keyboardType={'numeric'}
           placeholderType={ENTER_MOBILE}
           hidePassword={false}
+          setState={setMobile}
+          name={'mobile'}
+          value={mobile}
         />
       </View>
     </AuthenticationPageWrapper>

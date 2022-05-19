@@ -15,7 +15,23 @@ const {
 } = CREATE_NEW_PASSWORD_SCREEN;
 
 export default function AuthenticationPageWrapper(props) {
-  const { pageTitle, buttonTitle, pageName } = props;
+  const {
+    pageTitle,
+    buttonTitle,
+    pageName,
+    password,
+    mobileNumber,
+    mobile,
+    confirmNewPassword,
+    newPassword,
+    userName,
+    companyName,
+    mobileNum,
+    email,
+    GST,
+    firstPassword,
+    confirmPassword,
+  } = props;
   const navigation = useNavigation();
 
   const updateHandler = () => {
@@ -66,13 +82,38 @@ export default function AuthenticationPageWrapper(props) {
           <TouchableOpacity
             onPress={() => {
               if (pageTitle === CHANGE_NEW_PASSWORD) {
+                console.log('confirmNewPassword', confirmNewPassword);
+                console.log('newPassword', newPassword);
                 updateHandler();
+
                 navigation.navigate(pageName);
                 return;
               } else if (pageTitle === OTP_VERIFICATION) {
                 verificationHandler();
                 navigation.navigate(pageName);
                 return;
+              } else if (pageTitle === 'Customer Login') {
+                console.log('password', password);
+                console.log('mobileNumber', mobileNumber);
+              } else if (pageTitle === 'Forgot Password') {
+                console.log('mobile', mobile);
+                navigation.navigate(pageName);
+              } else if (pageTitle === 'Change New Password') {
+                console.log('coming inside');
+
+                navigation.navigate(pageName);
+              } else if (pageTitle === 'Customer Registration') {
+                console.log(
+                  userName,
+                  companyName,
+                  mobileNum,
+                  email,
+                  GST,
+                  firstPassword,
+                  confirmPassword,
+                  '---------------data',
+                );
+                navigation.navigate(pageName);
               } else {
                 navigation.navigate(pageName);
               }

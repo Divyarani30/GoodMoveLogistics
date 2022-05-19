@@ -28,6 +28,14 @@ export default function Signup({ route }) {
   // const { rightIcon, toggleRightIcon, setHidePassword, hidePassword } = route.params;
   const [rightIcon, toggleRightIcon] = useState('eye-slash');
   const [hidePassword, setHidePassword] = useState(true);
+  const [userName, setUserName] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  // const [companyType, setCompanyType] = useState('');
+  const [mobileNum, setMobileNum] = useState('');
+  const [email, setEmail] = useState('');
+  const [GST, setGST] = useState('');
+  const [firstPassword, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const navigation = useNavigation();
   const [companyTypes, setCompanyType] = useState([
@@ -55,8 +63,22 @@ export default function Signup({ route }) {
   return (
     <AuthenticationPageWrapper pageTitle={CUSTOMER_REGISTRATION} pageName={OTP_VERIFICATION} buttonTitle={REGISTER}>
       <View style={styles.nameStyle}>
-        <InputField iconName={'user-tie'} keyboardType={'default'} placeholderType={ENTER_NAME} />
-        <InputField iconName={'building'} keyboardType={'default'} placeholderType={ENTER_COMPANY_NAME} />
+        <InputField
+          iconName={'user-tie'}
+          keyboardType={'default'}
+          placeholderType={ENTER_NAME}
+          setState={setUserName}
+          name={'userName'}
+          value={userName}
+        />
+        <InputField
+          iconName={'building'}
+          keyboardType={'default'}
+          placeholderType={ENTER_COMPANY_NAME}
+          setState={setCompanyName}
+          name={'companyName'}
+          value={companyName}
+        />
         {/* <InputField iconName={'building'} keyboardType={'default'} placeholderType={'Enter Company Type'} /> */}
         <View style={styles.pickerStyle}>
           <Image style={styles.dropdown_image} mode="stretch" source={require('../assets/buildingIcon2.png')} />
@@ -88,9 +110,30 @@ export default function Signup({ route }) {
           </Picker>
         </View>
 
-        <InputField iconName={'mobile-alt'} keyboardType={'numeric'} placeholderType={ENTER_MOBILE_NUMBER} />
-        <InputField iconName={'envelope'} keyboardType={'default'} placeholderType={ENTER_MAIL} />
-        <InputField iconName={'file-invoice'} keyboardType={'default'} placeholderType={ENTER_GST_NUMBER} />
+        <InputField
+          iconName={'mobile-alt'}
+          keyboardType={'numeric'}
+          placeholderType={ENTER_MOBILE_NUMBER}
+          setState={setMobileNum}
+          name={'mobileNum'}
+          value={mobileNum}
+        />
+        <InputField
+          iconName={'envelope'}
+          keyboardType={'default'}
+          placeholderType={ENTER_MAIL}
+          setState={setEmail}
+          name={'email'}
+          value={email}
+        />
+        <InputField
+          iconName={'file-invoice'}
+          keyboardType={'default'}
+          placeholderType={ENTER_GST_NUMBER}
+          setState={setGST}
+          name={'GST'}
+          value={GST}
+        />
 
         <InputField
           iconName={'key'}
@@ -100,6 +143,9 @@ export default function Signup({ route }) {
           rightIcon={rightIcon}
           toggleRightIcon={toggleRightIcon}
           setHidePassword={setHidePassword}
+          setState={setPassword}
+          name={'firstPassword'}
+          value={firstPassword}
         />
         <InputField
           iconName={'key'}
@@ -109,6 +155,9 @@ export default function Signup({ route }) {
           rightIcon={rightIcon}
           toggleRightIcon={toggleRightIcon}
           setHidePassword={setHidePassword}
+          setState={setConfirmPassword}
+          name={'confirmPassword'}
+          value={confirmPassword}
         />
         <View style={styles.loginBack}>
           <Text style={styles.textStyle}>{ALREADY_HAVE_AN_ACCOUNT}</Text>

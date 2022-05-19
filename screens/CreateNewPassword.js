@@ -14,8 +14,17 @@ const { PLEASE_ENTER_OTP_SENT_TO_MOBILE_NUMBER, ENTER_NEW_PASSWORD, CONFIRM_PASS
 export default function CreateNewPassword() {
   const [rightIcon, toggleRightIcon] = useState('eye-slash');
   const [hidePassword, setHidePassword] = useState(true);
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+
   return (
-    <AuthenticationPageWrapper buttonTitle={UPDATE} pageName={LOGIN} pageTitle={CHANGE_NEW_PASSWORD}>
+    <AuthenticationPageWrapper
+      buttonTitle={UPDATE}
+      pageName={LOGIN}
+      pageTitle={CHANGE_NEW_PASSWORD}
+      newPassword={newPassword}
+      confirmNewPassword={confirmNewPassword}
+    >
       <View>
         <Text style={styles.textDesign}>{PLEASE_ENTER_OTP_SENT_TO_MOBILE_NUMBER}</Text>
       </View>
@@ -52,6 +61,9 @@ export default function CreateNewPassword() {
           rightIcon={rightIcon}
           toggleRightIcon={toggleRightIcon}
           setHidePassword={setHidePassword}
+          setState={setNewPassword}
+          name={'newPassword'}
+          value={newPassword}
         />
         <InputField
           iconName={'key'}
@@ -61,6 +73,9 @@ export default function CreateNewPassword() {
           rightIcon={rightIcon}
           toggleRightIcon={toggleRightIcon}
           setHidePassword={setHidePassword}
+          setState={setConfirmNewPassword}
+          name={'confirmNewPassword'}
+          value={confirmNewPassword}
         />
       </View>
     </AuthenticationPageWrapper>

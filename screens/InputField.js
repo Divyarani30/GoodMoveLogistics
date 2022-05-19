@@ -5,7 +5,19 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { changeIcon } from '../Utils/utils';
 
 export default function InputField(props) {
-  const { iconName, keyboardType, placeholderType, hidePassword, rightIcon, toggleRightIcon, setHidePassword } = props;
+  console.log(setState, 'setState-----');
+  const {
+    iconName,
+    keyboardType,
+    placeholderType,
+    hidePassword,
+    rightIcon,
+    toggleRightIcon,
+    setHidePassword,
+    setState,
+    value,
+    name,
+  } = props;
   return (
     <View style={styles.inputStyle}>
       <Input
@@ -22,6 +34,9 @@ export default function InputField(props) {
             }}
           />
         }
+        value={value}
+        name={name}
+        onChangeText={(e) => setState(e)}
         variant="outline"
         keyboardType={keyboardType}
         placeholder={placeholderType}
