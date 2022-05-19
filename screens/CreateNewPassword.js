@@ -6,15 +6,16 @@ import OTPInputView from '@twotalltotems/react-native-otp-input';
 import InputField from './InputField';
 import { stringLiterals } from '../Utils/stringLiterals';
 
-const { CREATE_NEW_PASSWORD_SCREEN } = stringLiterals;
-
-const { PLEASE_ENTER_OTP_SENT_TO_MOBILE_NUMBER, ENTER_NEW_PASSWORD, CONFIRM_PASSWORD } = CREATE_NEW_PASSWORD_SCREEN;
+const { CREATE_NEW_PASSWORD_SCREEN, LOGIN_SCREEN } = stringLiterals;
+const { LOGIN } = LOGIN_SCREEN;
+const { PLEASE_ENTER_OTP_SENT_TO_MOBILE_NUMBER, ENTER_NEW_PASSWORD, CONFIRM_PASSWORD, UPDATE, CHANGE_NEW_PASSWORD } =
+  CREATE_NEW_PASSWORD_SCREEN;
 
 export default function CreateNewPassword() {
   const [rightIcon, toggleRightIcon] = useState('eye-slash');
   const [hidePassword, setHidePassword] = useState(true);
   return (
-    <AuthenticationPageWrapper buttonTitle={'Update'} pageName={'Login'} pageTitle={'Change New Password'}>
+    <AuthenticationPageWrapper buttonTitle={UPDATE} pageName={LOGIN} pageTitle={CHANGE_NEW_PASSWORD}>
       <View>
         <Text style={styles.textDesign}>{PLEASE_ENTER_OTP_SENT_TO_MOBILE_NUMBER}</Text>
       </View>

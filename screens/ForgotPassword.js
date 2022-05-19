@@ -7,11 +7,12 @@ import InputField from './InputField';
 import { stringLiterals } from '../Utils/stringLiterals';
 
 const { FORGOT_PASSWORD_SCREEN } = stringLiterals;
-const { ENTER_YOUR_MOBILE_NUMBER_USED_DURING_REGISTRATION, ENTER_MOBILE } = FORGOT_PASSWORD_SCREEN;
+const { ENTER_YOUR_MOBILE_NUMBER_USED_DURING_REGISTRATION, ENTER_MOBILE, FORGOT_PASSWORD, SEND, CREATE_NEW_PASSWORD } =
+  FORGOT_PASSWORD_SCREEN;
 
 export default function ForgotPassword() {
   return (
-    <AuthenticationPageWrapper pageTitle={'Forgot Password'} buttonTitle={'Send'} pageName={'CreateNewPassword'}>
+    <AuthenticationPageWrapper pageTitle={FORGOT_PASSWORD} buttonTitle={SEND} pageName={CREATE_NEW_PASSWORD}>
       <View>
         <Text style={styles.textDesign}>{ENTER_YOUR_MOBILE_NUMBER_USED_DURING_REGISTRATION}</Text>
       </View>

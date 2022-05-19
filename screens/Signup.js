@@ -1,11 +1,28 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
 import AuthenticationPageWrapper from './AuthenticationPageWrapper';
-import { Input, Icon } from 'native-base';
-import { Fontisto } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import InputField from './InputField';
+import { stringLiterals } from '../Utils/stringLiterals';
+
+const { SIGN_UP_SCREEN, LOGIN_SCREEN } = stringLiterals;
+const {
+  CUSTOMER_REGISTRATION,
+  OTP_VERIFICATION,
+  REGISTER,
+  ENTER_NAME,
+  ENTER_COMPANY_NAME,
+  CHOOSE_COMPANY_TYPE,
+  COMPANY_TYPE,
+  ENTER_MOBILE_NUMBER,
+  ENTER_MAIL,
+  ENTER_GST_NUMBER,
+  CONFIRM_PASSWORD,
+  ALREADY_HAVE_AN_ACCOUNT,
+} = SIGN_UP_SCREEN;
+
+const { ENTER_PASSWORD, LOGIN } = LOGIN_SCREEN;
 
 export default function Signup({ route }) {
   // const { rightIcon, toggleRightIcon, setHidePassword, hidePassword } = route.params;
@@ -14,7 +31,6 @@ export default function Signup({ route }) {
 
   const navigation = useNavigation();
   const [companyTypes, setCompanyType] = useState([
-    'Choose Company Type',
     'Furniture',
     'Food & Beverages',
     'Machines/Equipments/SpareParts',
@@ -37,14 +53,10 @@ export default function Signup({ route }) {
 
   const [selectedCompanyType, setSelectedCompanyType] = useState();
   return (
-    <AuthenticationPageWrapper
-      pageTitle={'Customer Registration'}
-      pageName={'OTPVerification'}
-      buttonTitle={'Register'}
-    >
+    <AuthenticationPageWrapper pageTitle={CUSTOMER_REGISTRATION} pageName={OTP_VERIFICATION} buttonTitle={REGISTER}>
       <View style={styles.nameStyle}>
-        <InputField iconName={'user-tie'} keyboardType={'default'} placeholderType={'Enter Name'} />
-        <InputField iconName={'building'} keyboardType={'default'} placeholderType={'Enter Company Name'} />
+        <InputField iconName={'user-tie'} keyboardType={'default'} placeholderType={ENTER_NAME} />
+        <InputField iconName={'building'} keyboardType={'default'} placeholderType={ENTER_COMPANY_NAME} />
         {/* <InputField iconName={'building'} keyboardType={'default'} placeholderType={'Enter Company Type'} /> */}
         <View style={styles.pickerStyle}>
           <Image style={styles.dropdown_image} mode="stretch" source={require('../assets/buildingIcon2.png')} />
@@ -55,9 +67,9 @@ export default function Signup({ route }) {
           >
             <Picker.Item
               style={{ fontSize: 12, color: '#78909c' }}
-              key="Choose Company Type"
-              label="Choose Company Type"
-              value="companyType"
+              key={CHOOSE_COMPANY_TYPE}
+              label={CHOOSE_COMPANY_TYPE}
+              value={COMPANY_TYPE}
             />
             {companyTypeList()}
             {/* <Picker.Item style={{ fontSize: 12, color: '#78909c' }} label="Choose Company Type" value="companyType" />
@@ -76,14 +88,14 @@ export default function Signup({ route }) {
           </Picker>
         </View>
 
-        <InputField iconName={'mobile-alt'} keyboardType={'numeric'} placeholderType={'Enter Mobile Name'} />
-        <InputField iconName={'envelope'} keyboardType={'default'} placeholderType={'Enter email'} />
-        <InputField iconName={'file-invoice'} keyboardType={'default'} placeholderType={'Enter GST number'} />
+        <InputField iconName={'mobile-alt'} keyboardType={'numeric'} placeholderType={ENTER_MOBILE_NUMBER} />
+        <InputField iconName={'envelope'} keyboardType={'default'} placeholderType={ENTER_MAIL} />
+        <InputField iconName={'file-invoice'} keyboardType={'default'} placeholderType={ENTER_GST_NUMBER} />
 
         <InputField
           iconName={'key'}
           keyboardType={'default'}
-          placeholderType={'Enter Password'}
+          placeholderType={ENTER_PASSWORD}
           hidePassword={hidePassword}
           rightIcon={rightIcon}
           toggleRightIcon={toggleRightIcon}
@@ -92,16 +104,16 @@ export default function Signup({ route }) {
         <InputField
           iconName={'key'}
           keyboardType={'default'}
-          placeholderType={'Confirm Password'}
+          placeholderType={CONFIRM_PASSWORD}
           hidePassword={hidePassword}
           rightIcon={rightIcon}
           toggleRightIcon={toggleRightIcon}
           setHidePassword={setHidePassword}
         />
         <View style={styles.loginBack}>
-          <Text style={styles.textStyle}>Already have an account ?</Text>
+          <Text style={styles.textStyle}>{ALREADY_HAVE_AN_ACCOUNT}</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.loginText}>Login</Text>
+            <Text style={styles.loginText}>{LOGIN}</Text>
           </TouchableOpacity>
         </View>
       </View>

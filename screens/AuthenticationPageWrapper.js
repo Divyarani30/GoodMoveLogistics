@@ -5,7 +5,14 @@ import { stringLiterals } from '../Utils/stringLiterals';
 
 const { CREATE_NEW_PASSWORD_SCREEN, LETS_GO } = stringLiterals;
 
-const { PASSWORD_UPDATE, PASSWORD_CHANGED_SUCCESSFULLY, REGISTRATION_SUCCESSFUL } = CREATE_NEW_PASSWORD_SCREEN;
+const {
+  PASSWORD_UPDATE,
+  PASSWORD_CHANGED_SUCCESSFULLY,
+  REGISTRATION_SUCCESSFUL,
+  CHANGE_NEW_PASSWORD,
+  OTP_VERIFICATION,
+  YOUR_REGISTRATION_IS_SUCCESSFUL,
+} = CREATE_NEW_PASSWORD_SCREEN;
 
 export default function AuthenticationPageWrapper(props) {
   const { pageTitle, buttonTitle, pageName } = props;
@@ -58,11 +65,11 @@ export default function AuthenticationPageWrapper(props) {
         <View style={styles.buttonStyles}>
           <TouchableOpacity
             onPress={() => {
-              if (pageTitle === 'Change New Password') {
+              if (pageTitle === CHANGE_NEW_PASSWORD) {
                 updateHandler();
                 navigation.navigate(pageName);
                 return;
-              } else if (pageTitle === 'OTP Verification') {
+              } else if (pageTitle === OTP_VERIFICATION) {
                 verificationHandler();
                 navigation.navigate(pageName);
                 return;

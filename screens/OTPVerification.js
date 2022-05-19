@@ -2,12 +2,19 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import AuthenticationPageWrapper from './AuthenticationPageWrapper';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
+import { stringLiterals } from '../Utils/stringLiterals';
+
+const { OTP_VERIFICATION_SCREEN, LOGIN_SCREEN, CREATE_NEW_PASSWORD_SCREEN } = stringLiterals;
+
+const { VERIFY_OTP, PLEASE_ENTER_OTP_SENT_TO_MOBILE_NUMBER } = OTP_VERIFICATION_SCREEN;
+const { LOGIN } = LOGIN_SCREEN;
+const { OTP_VERIFICATION } = CREATE_NEW_PASSWORD_SCREEN;
 
 export default function OTPVerification() {
   return (
-    <AuthenticationPageWrapper buttonTitle={'Verify'} pageName={'Login'} pageTitle={'OTP Verification'}>
+    <AuthenticationPageWrapper buttonTitle={VERIFY_OTP} pageName={LOGIN} pageTitle={OTP_VERIFICATION}>
       <View>
-        <Text style={styles.textDesign}>Enter 4 digit code sent to your Mobile number (to show the phone number)</Text>
+        <Text style={styles.textDesign}>{PLEASE_ENTER_OTP_SENT_TO_MOBILE_NUMBER}</Text>
       </View>
       <View style={styles.otpInputStyle}>
         <OTPInputView
