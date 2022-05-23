@@ -5,6 +5,11 @@ import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import InputField from './InputField';
 import { stringLiterals } from '../Utils/stringLiterals';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { phoneRegExp } from '../Utils/regex';
+
+import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react-dom';
 
 const { SIGN_UP_SCREEN, LOGIN_SCREEN } = stringLiterals;
 const {
@@ -23,6 +28,16 @@ const {
 } = SIGN_UP_SCREEN;
 
 const { ENTER_PASSWORD, LOGIN } = LOGIN_SCREEN;
+
+const validationSchema = Yup.object({
+  userName: Yup.string().trim().min(3, 'Invalid name!').required('Username is required!'),
+  companyName: Yup.string().trim().required('Company name is required'),
+  mobileNum: Yup.string().matches(phoneRegExp, 'Phone number is not valid').required('mobile number is required'),
+  email: Yup.string().email('Invalid Email').required('Email is required!'),
+  GST: Yup.string().min(15, 'Invalid GST number').required('GST number is required!'),
+  firstPassword: Yup.string().trim().min(6, 'Password is too short!').required('Password is required'),
+  confirmPassword: Yup.string().equals([Yup.ref('firstPassword'), null], 'Password does not match'),
+});
 
 export default function Signup({ route }) {
   // const { rightIcon, toggleRightIcon, setHidePassword, hidePassword } = route.params;
@@ -61,40 +76,66 @@ export default function Signup({ route }) {
 
   const [selectedCompanyType, setSelectedCompanyType] = useState();
   return (
-    <AuthenticationPageWrapper pageTitle={CUSTOMER_REGISTRATION} pageName={OTP_VERIFICATION} buttonTitle={REGISTER}>
+    <AuthenticationPageWrapper
+      pageTitle={CUSTOMER_REGISTRATION}
+      pageName={OTP_VERIFICATION}
+      buttonTitle={REGISTER}
+      userName={userName}
+      companyName={companyName}
+      mobileNum={mobileNum}
+      email={email}
+      GST={GST}
+      firstPassword={firstPassword}
+      confirmPassword={confirmPassword}
+    >
       <View style={styles.nameStyle}>
-        <InputField
-          iconName={'user-tie'}
-          keyboardType={'default'}
-          placeholderType={ENTER_NAME}
-          setState={setUserName}
-          name={'userName'}
-          value={userName}
-        />
-        <InputField
-          iconName={'building'}
-          keyboardType={'default'}
-          placeholderType={ENTER_COMPANY_NAME}
-          setState={setCompanyName}
-          name={'companyName'}
-          value={companyName}
-        />
-        {/* <InputField iconName={'building'} keyboardType={'default'} placeholderType={'Enter Company Type'} /> */}
-        <View style={styles.pickerStyle}>
-          <Image style={styles.dropdown_image} mode="stretch" source={require('../assets/buildingIcon2.png')} />
-          <Picker
-            style={styles.pickerWrapper}
-            selectedValue={selectedCompanyType}
-            onValueChange={(itemValue) => setSelectedCompanyType(itemValue)}
-          >
-            <Picker.Item
-              style={{ fontSize: 12, color: '#78909c' }}
-              key={CHOOSE_COMPANY_TYPE}
-              label={CHOOSE_COMPANY_TYPE}
-              value={COMPANY_TYPE}
-            />
-            {companyTypeList()}
-            {/* <Picker.Item style={{ fontSize: 12, color: '#78909c' }} label="Choose Company Type" value="companyType" />
+        <Formik
+          initialValues={{
+            userName: '',
+            companyName: '',
+            mobileNum: '',
+            email: '',
+            GST: '',
+            firstPassword: '',
+            confirmPassword: '',
+          }}
+          validationSchema={validationSchema}
+        >
+          {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => {
+            console.log(values, 'values------');
+            return (
+              <>
+                <InputField
+                  iconName={'user-tie'}
+                  keyboardType={'default'}
+                  placeholderType={ENTER_NAME}
+                  setState={setUserName}
+                  name={'userName'}
+                  value={userName}
+                />
+                <InputField
+                  iconName={'building'}
+                  keyboardType={'default'}
+                  placeholderType={ENTER_COMPANY_NAME}
+                  setState={setCompanyName}
+                  name={'companyName'}
+                  value={companyName}
+                />
+                <View style={styles.pickerStyle}>
+                  <Image style={styles.dropdown_image} mode="stretch" source={require('../assets/buildingIcon2.png')} />
+                  <Picker
+                    style={styles.pickerWrapper}
+                    selectedValue={selectedCompanyType}
+                    onValueChange={(itemValue) => setSelectedCompanyType(itemValue)}
+                  >
+                    <Picker.Item
+                      style={{ fontSize: 12, color: '#78909c' }}
+                      key={CHOOSE_COMPANY_TYPE}
+                      label={CHOOSE_COMPANY_TYPE}
+                      value={COMPANY_TYPE}
+                    />
+                    {companyTypeList()}
+                    {/* <Picker.Item style={{ fontSize: 12, color: '#78909c' }} label="Choose Company Type" value="companyType" />
             <Picker.Item style={{ fontSize: 12 }} label="Furniture" value="furniture" />
             <Picker.Item style={{ fontSize: 12 }} label="Food & Beverages" value="food&bev" />
             <Picker.Item style={{ fontSize: 12 }} label="Machines/Equipments/SpareParts" value="machines/equip" />
@@ -107,58 +148,63 @@ export default function Signup({ route }) {
             <Picker.Item style={{ fontSize: 12 }} label="Metal Sheets" value="MetalSheets" />
             <Picker.Item style={{ fontSize: 12 }} label="Garments/Apparel/Textiles" value="Garments" />
             <Picker.Item style={{ fontSize: 12 }} label="Electrical/Electronics" value="Garments" /> */}
-          </Picker>
-        </View>
+                  </Picker>
+                </View>
+                <InputField
+                  iconName={'mobile-alt'}
+                  keyboardType={'numeric'}
+                  placeholderType={ENTER_MOBILE_NUMBER}
+                  setState={setMobileNum}
+                  name={'mobileNum'}
+                  value={mobileNum}
+                />
+                <InputField
+                  iconName={'envelope'}
+                  keyboardType={'default'}
+                  placeholderType={ENTER_MAIL}
+                  setState={setEmail}
+                  name={'email'}
+                  value={email}
+                />
+                <InputField
+                  iconName={'file-invoice'}
+                  keyboardType={'default'}
+                  placeholderType={ENTER_GST_NUMBER}
+                  setState={setGST}
+                  name={'GST'}
+                  value={GST}
+                />
+                <InputField
+                  iconName={'key'}
+                  keyboardType={'default'}
+                  placeholderType={ENTER_PASSWORD}
+                  hidePassword={hidePassword}
+                  rightIcon={rightIcon}
+                  toggleRightIcon={toggleRightIcon}
+                  setHidePassword={setHidePassword}
+                  setState={setPassword}
+                  name={'firstPassword'}
+                  value={firstPassword}
+                />
+                <InputField
+                  iconName={'key'}
+                  keyboardType={'default'}
+                  placeholderType={CONFIRM_PASSWORD}
+                  hidePassword={hidePassword}
+                  rightIcon={rightIcon}
+                  toggleRightIcon={toggleRightIcon}
+                  setHidePassword={setHidePassword}
+                  setState={setConfirmPassword}
+                  name={'confirmPassword'}
+                  value={confirmPassword}
+                />
+              </>
+            );
+          }}
+        </Formik>
 
-        <InputField
-          iconName={'mobile-alt'}
-          keyboardType={'numeric'}
-          placeholderType={ENTER_MOBILE_NUMBER}
-          setState={setMobileNum}
-          name={'mobileNum'}
-          value={mobileNum}
-        />
-        <InputField
-          iconName={'envelope'}
-          keyboardType={'default'}
-          placeholderType={ENTER_MAIL}
-          setState={setEmail}
-          name={'email'}
-          value={email}
-        />
-        <InputField
-          iconName={'file-invoice'}
-          keyboardType={'default'}
-          placeholderType={ENTER_GST_NUMBER}
-          setState={setGST}
-          name={'GST'}
-          value={GST}
-        />
+        {/* <InputField iconName={'building'} keyboardType={'default'} placeholderType={'Enter Company Type'} /> */}
 
-        <InputField
-          iconName={'key'}
-          keyboardType={'default'}
-          placeholderType={ENTER_PASSWORD}
-          hidePassword={hidePassword}
-          rightIcon={rightIcon}
-          toggleRightIcon={toggleRightIcon}
-          setHidePassword={setHidePassword}
-          setState={setPassword}
-          name={'firstPassword'}
-          value={firstPassword}
-        />
-        <InputField
-          iconName={'key'}
-          keyboardType={'default'}
-          placeholderType={CONFIRM_PASSWORD}
-          hidePassword={hidePassword}
-          rightIcon={rightIcon}
-          toggleRightIcon={toggleRightIcon}
-          setHidePassword={setHidePassword}
-          setState={setConfirmPassword}
-          name={'confirmPassword'}
-          value={confirmPassword}
-        />
         <View style={styles.loginBack}>
           <Text style={styles.textStyle}>{ALREADY_HAVE_AN_ACCOUNT}</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Login')}>

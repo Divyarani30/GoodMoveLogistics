@@ -7,7 +7,9 @@ import { useNavigation } from '@react-navigation/native';
 import AuthenticationPageWrapper from './AuthenticationPageWrapper';
 import InputField from './InputField';
 import { stringLiterals } from '../Utils/stringLiterals';
-
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { phoneRegExp } from '../Utils/regex';
 const { LOGIN_SCREEN } = stringLiterals;
 
 const {
@@ -22,6 +24,11 @@ const {
   SIGN_UP,
 } = LOGIN_SCREEN;
 
+const validationSchema = Yup.object({
+  mobileNumber: Yup.string().matches(phoneRegExp, 'Phone number is not valid').required('mobile number is required'),
+  password: Yup.string().trim().min(8, 'password is too short').required('password is required'),
+});
+
 export default function Login() {
   const [isSelected, setSelection] = useState(false);
   const [rightIcon, toggleRightIcon] = useState('eye-slash');
@@ -29,42 +36,68 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
 
+  // const userInfo = {
+  //   password: '',
+  //   mobileNumber: '',
+  // };
+
   const navigation = useNavigation();
   return (
     <AuthenticationPageWrapper
       pageTitle={CUSTOMER_LOGIN}
       buttonTitle={LOGIN}
-      mobileNumber={mobileNumber}
-      password={password}
+      // mobileNumber={mobileNumber}
+      // password={password}
     >
       <View>
         {/* mobile number, password */}
-        <View style={styles.buttonStyle}>
-          <InputField
-            iconName={'mobile-alt'}
-            keyboardType={'numeric'}
-            placeholderType={ENTER_MOBILE}
-            setState={setMobileNumber}
-            name={'mobileNumber'}
-            value={mobileNumber}
-          />
-        </View>
+        <Formik
+          initialValues={{ mobileNumber: '', password: '' }}
+          validationSchema={validationSchema}
+          // onSubmit={(values, formikActions) => {
+          //   console.log(values, '------submited values');
+          // }}
+        >
+          {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => {
+            const { mobileNumber, password } = values;
+            console.log(values, 'values------');
+            return (
+              <>
+                <View style={styles.buttonStyle}>
+                  <InputField
+                    iconName={'mobile-alt'}
+                    keyboardType={'numeric'}
+                    placeholderType={ENTER_MOBILE}
+                    error={touched.mobileNumber && errors.mobileNumber}
+                    setState={handleChange}
+                    onBlur={handleBlur('mobileNumber')}
+                    name={'mobileNumber'}
+                    value={mobileNumber}
+                  />
+                </View>
 
-        {/* password Input field */}
-        <View style={styles.buttonStylesX}>
-          <InputField
-            iconName={'key'}
-            keyboardType={'default'}
-            placeholderType={ENTER_PASSWORD}
-            rightIcon={rightIcon}
-            toggleRightIcon={toggleRightIcon}
-            hidePassword={hidePassword}
-            setHidePassword={setHidePassword}
-            setState={setPassword}
-            name={'password'}
-            value={password}
-          />
-        </View>
+                {/* password Input field */}
+                <View style={styles.buttonStylesX}>
+                  <InputField
+                    iconName={'key'}
+                    keyboardType={'default'}
+                    placeholderType={ENTER_PASSWORD}
+                    error={touched.password && errors.password}
+                    rightIcon={rightIcon}
+                    toggleRightIcon={toggleRightIcon}
+                    hidePassword={hidePassword}
+                    setHidePassword={setHidePassword}
+                    setState={handleChange}
+                    onBlur={handleBlur('password')}
+                    name={'password'}
+                    value={password}
+                  />
+                </View>
+              </>
+            );
+          }}
+        </Formik>
+
         {/* Button */}
         <View style={styles.rememberMeStyle}>
           <CheckBox

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import AuthenticationPageWrapper from './AuthenticationPageWrapper';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
@@ -11,6 +11,8 @@ const { LOGIN } = LOGIN_SCREEN;
 const { OTP_VERIFICATION } = CREATE_NEW_PASSWORD_SCREEN;
 
 export default function OTPVerification() {
+  const [otp, setOtp] = useState('');
+  console.log('otp', otp);
   return (
     <AuthenticationPageWrapper buttonTitle={VERIFY_OTP} pageName={LOGIN} pageTitle={OTP_VERIFICATION}>
       <View>
@@ -24,7 +26,7 @@ export default function OTPVerification() {
           codeInputFieldStyle={styles.underlineStyleBase}
           codeInputHighlightStyle={styles.underlineStyleHighLighted}
           onCodeFilled={(code) => {
-            console.log(`Code is ${code}, you are good to go!`);
+            setOtp(code);
           }}
         />
       </View>
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
   textDesign: {
     marginTop: 30,
     marginBottom: -45,
-    marginHorizontal: 36,
+    marginHorizontal: 73,
   },
   underlineStyleBase: {
     width: 35,

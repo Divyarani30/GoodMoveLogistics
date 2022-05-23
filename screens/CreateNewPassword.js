@@ -16,6 +16,8 @@ export default function CreateNewPassword() {
   const [hidePassword, setHidePassword] = useState(true);
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [otp, setOtp] = useState('');
+  console.log(otp, 'otp');
 
   return (
     <AuthenticationPageWrapper
@@ -36,7 +38,7 @@ export default function CreateNewPassword() {
           codeInputFieldStyle={styles.underlineStyleBase}
           codeInputHighlightStyle={styles.underlineStyleHighLighted}
           onCodeFilled={(code) => {
-            console.log(`Code is ${code}, you are good to go!`);
+            setOtp(code);
           }}
         />
       </View>

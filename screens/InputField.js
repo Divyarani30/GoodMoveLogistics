@@ -17,10 +17,13 @@ export default function InputField(props) {
     setState,
     value,
     name,
+    error,
+    onBlur,
   } = props;
   return (
     <View style={styles.inputStyle}>
       <Input
+        onBlur={onBlur}
         InputLeftElement={
           <Icon
             as={<FontAwesome5 name={iconName} size={24} color="black" />}
@@ -36,7 +39,7 @@ export default function InputField(props) {
         }
         value={value}
         name={name}
-        onChangeText={(e) => setState(e)}
+        onChangeText={setState(name)}
         variant="outline"
         keyboardType={keyboardType}
         placeholder={placeholderType}
@@ -61,6 +64,7 @@ export default function InputField(props) {
           />
         }
       />
+      {error ? <Text style={styles.errorStyle}>{error}</Text> : null}
     </View>
   );
 }
@@ -70,5 +74,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginRight: 5,
     padding: 2,
+  },
+  errorStyle: {
+    color: 'red',
+    fontSize: 12,
+    marginTop: 10,
+    marginLeft: 2,
   },
 });
